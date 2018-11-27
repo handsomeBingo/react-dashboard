@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+.tab-header {
+  height: 60px;
+  width: 100vw;
+  background: #00b38a;
+  margin-bottom: 0;
+}
+.tab-header li {
+  height: 100%;
+}
+.sys-title {
+  line-height: 60px;
+  margin: 0;
+  padding: 0 0 0 20px;
+  text-align: left;
+  color: #fff;
+}
+.user-name {
+  line-height: 60px;
+}
+.title-ops {
+  margin-top: 10px;
+}
+.left-nav {
+  height: 100%;
+  background: #00b38a;
+}
+.wrapper {
+  width: 100%;
+  height: 100vh;
+}

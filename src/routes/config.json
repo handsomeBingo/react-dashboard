@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/login",
+    "component": "../auth/login"
+  },
+  {
+    "path": "/home",
+    "component": "../home/home"
+  },
+  {
+    "path": "/slash",
+    "component": "../slash/index"
+  }
+]

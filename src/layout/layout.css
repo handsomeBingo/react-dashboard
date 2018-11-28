@@ -13,7 +13,7 @@ a {
 .tab-header {
   height: 60px;
   width: 100vw;
-  background: #00b38a;
+  background: #337ab7;
   margin-bottom: 0;
 }
 .tab-header li {
@@ -32,9 +32,24 @@ a {
 .title-ops {
   margin-top: 10px;
 }
-.left-nav {
+ul.left-nav {
+  padding-right: 0;
   height: 100%;
-  background: #00b38a;
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+}
+.left-nav li {
+  padding: 0;
+  height: 40px;
+  line-height: 40px;
+}
+.left-nav>li>a {
+  padding: 0;
+  width: 100%;
+  color: #fff;
+}
+.left-nav>li>a:hover, .left-nav>li.active a {
+  background: #000;
 }
 .wrapper {
   width: 100%;

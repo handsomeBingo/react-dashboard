@@ -8,7 +8,9 @@ class Layout extends Component {
   constructor(prop) {
     super(prop);
     this.state = {
-      activeIndex: 0
+      activeIndex: 0,
+      h: 'auto',
+      w: 'auto'
     };
   }
 
@@ -16,6 +18,22 @@ class Layout extends Component {
     this.setState({
       activeIndex: i
     })
+  }
+  componentDidMount() {
+    var left = document.getElementById('left');
+    var right = document.getElementById('right');
+    var cH= document.documentElement.clientHeight;
+    var cW = document.documentElement.getBoundingClientRect().width;
+    this.setState({
+      h: `${cH - 60}px`,
+      w: `${cW}px`
+    });
+    window.onresize = () => {
+      var cH= document.documentElement.clientHeight;
+      this.setState({
+        h: `${cH - 60}px`
+      });
+    }
   }
 
   render() {
@@ -68,10 +86,10 @@ class Layout extends Component {
                 </select>
               </li>
             </ul>
-            <ul className="nav nav-pills nav-stacked col-md-1 left-nav">
+            <ul className="nav nav-pills nav-stacked col-md-1 left-nav" style={{height: this.state.h}}>
               {lis}
             </ul>
-            <div className="col-md-10">
+            <div className="col-md-11" id="right" style={{height: this.state.h}}>
               {Routes}
             </div>
           </div>

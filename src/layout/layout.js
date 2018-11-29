@@ -5,6 +5,8 @@ import history from '../history'
 import LogOutBtn from '../auth/logoutbtn'
 import Routes from '../routes/router'
 import PropTypes from "prop-types";
+import {RouterContext} from '../auth/router-context';
+let StateContext = React.createContext('none');
 class Layout extends Component {
   constructor(prop) {
     super(prop);
@@ -13,14 +15,11 @@ class Layout extends Component {
       h: 'auto',
       w: 'auto',
       dropdown: 'none',
-      isLogin: localStorage.getItem('isLogin')
+      isLogin: true
     };
     this.dropMenu = this.dropMenu.bind(this)
     this.loginIn = this.loginIn.bind(this)
     this.logout = this.logout.bind(this)
-  }
-  static contextTypes = {
-    router: PropTypes.object.isRequired
   }
   activeChange(i) {
     this.setState({
@@ -99,44 +98,48 @@ class Layout extends Component {
       return (
         <div>
           <Router history={history} loginIn={this.loginIn} logout={this.logout}>
-            <div>
-              <ul className="row tab-header">
-                <li className="col-md-4">
-                  <h2 className="sys-title">
-                    CRM管理系统
-                  </h2>
-                </li>
-                <li className="col-md-1 col-md-offset-6 user-name">
-                  <span>马宾</span>
-                </li>
-                <li className="col-md-1">
-                  <button type="button"
-                          onClick={this.dropMenu}
-                          className="btn btn-default dropdown-toggle title-ops"
-                          data-toggle="dropdown">默认 <span className="caret"></span>
-                  </button>
-                  <ul className="dropdown-menu" role="menu" style={{display: this.state.dropdown}}>
-                    <li><LogOutBtn loginIn={this.loginIn} logout={this.logout} /></li>
-                    <li><a>修改密码</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <ul className="nav nav-pills nav-stacked col-md-1 left-nav"
-                  style={{height: this.state.h}}>
-                {lis}
-              </ul>
-              <div className="col-md-11" id="right" style={{height: this.state.h}}>
-                {Routes.filter((i) => i.path != '/login')}
+            <RouterContext.Provider value={this.loginIn}>
+              <div>
+                <ul className="row tab-header">
+                  <li className="col-md-4">
+                    <h2 className="sys-title">
+                      CRM管理系统
+                    </h2>
+                  </li>
+                  <li className="col-md-1 col-md-offset-6 user-name">
+                    <span>马宾</span>
+                  </li>
+                  <li className="col-md-1">
+                    <button type="button"
+                            onClick={this.dropMenu}
+                            className="btn btn-default dropdown-toggle title-ops"
+                            data-toggle="dropdown">默认 <span className="caret"></span>
+                    </button>
+                    <ul className="dropdown-menu" role="menu" style={{display: this.state.dropdown}}>
+                      <li><LogOutBtn loginIn={this.loginIn} logout={this.logout} /></li>
+                      <li><a>修改密码</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <ul className="nav nav-pills nav-stacked col-md-1 left-nav"
+                    style={{height: this.state.h}}>
+                  {lis}
+                </ul>
+                <div className="col-md-11" id="right" style={{height: this.state.h}}>
+                  {Routes.filter((i) => i.path != '/login')}
+                </div>
               </div>
-            </div>
+            </RouterContext.Provider>
           </Router>
         </div>
       )
     } else {
       return (
-        <Router history={history}>
+        <Router history={history} loginIn={this.loginIn} logout={this.logout}>
           <div>
-            {Routes}
+            <RouterContext.Provider value={this.loginIn}>
+              {Routes}
+            </RouterContext.Provider>
           </div>
         </Router>
       )

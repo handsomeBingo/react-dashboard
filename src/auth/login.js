@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './login.css';
 import http from '../libs/http';
 import PropTypes from "prop-types";
+import {RouterContext} from './router-context';
 
 let {httpPost} = http()
 
@@ -21,7 +22,7 @@ class Login extends Component {
   };
   login () {
     localStorage.setItem('isLogin', true)
-    this.context.loginIn(true)
+    // this.props.loginIn(true)
     this.context.router.history.push("/home");
     //
     // httpPost('/user/auth/login', this.state).then((r) => {
@@ -75,11 +76,17 @@ class Login extends Component {
               </div>
               <div className="form-group">
                 <div className="row">
-                  <button className="btn btn-primary col-md-offset-2 col-md-9"
-                          onClick={this.login}
-                          type="button">
-                    登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
-                  </button>
+                  <RouterContext.Consumer>
+                    {
+                      (value) => {
+                        return <button className="btn btn-primary col-md-offset-2 col-md-9"
+                                onClick={() => {value(true);this.login()}}
+                                type="button">
+                          登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                        </button>
+                      }
+                    }
+                  </RouterContext.Consumer>
                 </div>
               </div>
             </div>

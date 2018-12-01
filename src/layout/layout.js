@@ -3,9 +3,8 @@ import './layout.css'
 import { Link, Route, Router } from 'react-router-dom'
 import history from '../history'
 import LogOutBtn from '../auth/logoutbtn'
-import Routes from '../routes/router'
-import PropTypes from "prop-types";
 import {RouterContext} from '../auth/router-context';
+import {mapExcludeLoginRoutes, loginRouter} from '../routes/router'
 let StateContext = React.createContext('none');
 class Layout extends Component {
   constructor(prop) {
@@ -17,16 +16,25 @@ class Layout extends Component {
       dropdown: 'none',
       isLogin: true
     };
-    this.dropMenu = this.dropMenu.bind(this)
-    this.loginIn = this.loginIn.bind(this)
-    this.logout = this.logout.bind(this)
+    this.dropMenu = this.dropMenu.bind(this);
+    this.loginIn = this.loginIn.bind(this);
+    this.logout = this.logout.bind(this);
+    this.restDrop = this.restDrop.bind(this);
   }
   activeChange(i) {
     this.setState({
       activeIndex: i
     })
   }
+  restDrop() {
+    this.setState({
+      dropdown: 'none'
+    })
+  }
   componentDidMount() {
+    this.setState({
+      dropdown: 'none'
+    });
     var cH= document.documentElement.clientHeight;
     var cW = document.documentElement.getBoundingClientRect().width;
     this.setState({
@@ -115,8 +123,14 @@ class Layout extends Component {
                             className="btn btn-default dropdown-toggle title-ops"
                             data-toggle="dropdown">默认 <span className="caret"></span>
                     </button>
-                    <ul className="dropdown-menu" role="menu" style={{display: this.state.dropdown}}>
-                      <li><LogOutBtn loginIn={this.loginIn} logout={this.logout} /></li>
+                    <ul className="dropdown-menu re-drop-width"
+                        role="menu"
+                        style={{display: this.state.dropdown}}>
+                      <li>
+                        <LogOutBtn loginIn={this.loginIn}
+                                   logout={this.logout}
+                                   restDrop={this.restDrop} />
+                      </li>
                       <li><a>修改密码</a></li>
                     </ul>
                   </li>
@@ -126,7 +140,7 @@ class Layout extends Component {
                   {lis}
                 </ul>
                 <div className="col-md-11" id="right" style={{height: this.state.h}}>
-                  {Routes.filter((i) => i.path != '/login')}
+                  {mapExcludeLoginRoutes}
                 </div>
               </div>
             </RouterContext.Provider>
@@ -138,7 +152,7 @@ class Layout extends Component {
         <Router history={history} loginIn={this.loginIn} logout={this.logout}>
           <div>
             <RouterContext.Provider value={this.loginIn}>
-              {Routes}
+              {loginRouter}
             </RouterContext.Provider>
           </div>
         </Router>

@@ -14,11 +14,13 @@ class LogOutBtn extends Component {
   login() {
     setTimeout(() => {
       this.props.loginIn(true);
+      this.props.restDrop();
       this.context.router.history.push("/home");
     })
   }
   quit() {
     this.context.router.history.push("/login");
+    this.props.restDrop();
     this.props.logout(false)
   }
 

@@ -16,6 +16,7 @@ class Login extends Component {
     this.login = this.login.bind(this);
     this.uNameChange = this.uNameChange.bind(this);
     this.pwdChange = this.pwdChange.bind(this);
+    this.register = this.register.bind(this);
   }
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -38,6 +39,9 @@ class Login extends Component {
       }
     )
   }
+  register() {
+    this.context.router.history.push('/registry')
+  }
   pwdChange(e) {
     this.setState({
       password: e.target.value
@@ -49,45 +53,48 @@ class Login extends Component {
       <div className="full-screen">
         <div className="container login-form-wrapper" style={{width: '400px'}}>
           <form className="form-horizontal row" role="form">
-            <div className="">
-              <div className="form-group">
-                <label htmlFor="userName" className="control-label col-md-4">
-                  用户名
-                </label>
-                <div className="col-md-8">
-                  <input type="text"
-                         className="form-control"
-                         vlaue={this.state.password}
-                         onChange={this.uNameChange}
-                         placeholder="请输入用户名"/>
-                </div>
+            <div className="form-group">
+              <label htmlFor="userName" className="control-label col-md-4">
+                用户名
+              </label>
+              <div className="col-md-8">
+                <input type="text"
+                       className="form-control"
+                       vlaue={this.state.password}
+                       onChange={this.uNameChange}
+                       placeholder="请输入用户名"/>
               </div>
-              <div className="form-group">
-                <label htmlFor="pwd" className="control-label col-md-4">
-                  密&nbsp;&nbsp;&nbsp;码
-                </label>
-                <div className="col-md-8">
-                  <input className="form-control"
-                         placeholder="请输入密码"
-                         value={this.state.password}
-                         onChange={this.pwdChange}
-                         type="password" />
-                </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="pwd" className="control-label col-md-4">
+                密&nbsp;&nbsp;&nbsp;码
+              </label>
+              <div className="col-md-8">
+                <input className="form-control"
+                       placeholder="请输入密码"
+                       value={this.state.password}
+                       onChange={this.pwdChange}
+                       type="password" />
               </div>
-              <div className="form-group">
-                <div className="row">
-                  <RouterContext.Consumer>
-                    {
-                      (value) => {
-                        return <button className="btn btn-primary col-md-offset-2 col-md-9"
-                                onClick={() => {value(true);this.login()}}
-                                type="button">
-                          登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
-                        </button>
-                      }
+            </div>
+            <div className="form-group">
+              <div className="row">
+                <RouterContext.Consumer>
+                  {
+                    (value) => {
+                      return <button className="btn btn-primary col-md-offset-2 col-md-4"
+                                     onClick={() => {value(true);this.login()}}
+                                     type="button">
+                        登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                      </button>
                     }
-                  </RouterContext.Consumer>
-                </div>
+                  }
+                </RouterContext.Consumer>
+                <button className="btn btn-primary col-md-offset-2 col-md-4"
+                        onClick={this.register}
+                        type="button">
+                  注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册
+                </button>
               </div>
             </div>
           </form>

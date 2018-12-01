@@ -19,6 +19,9 @@ a {
 .tab-header li {
   height: 100%;
 }
+.re-drop-width {
+  min-width: 110px;
+}
 .sys-title {
   line-height: 60px;
   margin: 0;
@@ -48,7 +51,10 @@ ul.left-nav {
   width: 100%;
   color: #fff;
 }
-.left-nav>li>a:hover, .left-nav>li.active a {
+.left-nav>li>a:hover,
+.left-nav>li.active a,
+.left-nav>li.active>a:hover,
+.left-nav>li.active>a:focus {
   background: #000;
 }
 .wrapper {

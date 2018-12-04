@@ -3,13 +3,11 @@ import { Link, Route, Router } from 'react-router-dom'
 import Login from '../auth/login'
 import Home from '../home/home'
 import SlashPage from '../slash'
-import routeConfig from './config.json'
 import Registry from '../auth/register'
+import ChangeInfo from '../auth/change-ifno'
+import MyClues from '../clue/myClues'
+// 鉴权路由
 let authorizedRoutes = [
-  {
-    path: '/login',
-    component: Login
-  },
   {
     path: '/',
     component: Home
@@ -21,8 +19,17 @@ let authorizedRoutes = [
   {
     path: '/slash',
     component: SlashPage
+  },
+  {
+    path: '/changeInfo',
+    component: ChangeInfo
+  },
+  {
+    path: '/myclue',
+    component: MyClues
   }
 ]
+// 非鉴权路由
 let unauthorizedRoutes = [
   {
     path: '/login',

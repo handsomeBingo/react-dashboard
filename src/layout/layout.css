@@ -66,3 +66,34 @@ ul.left-nav {
   margin-left: 0;
   margin-right: 0;
 }
+a:hover, a:focus, a:visited {
+  text-decoration: none!important;
+}
+
+.mgtp20 {
+  margin-top: 20px;
+}
+.mgnlft20 {
+  margin-left: 20px;
+}
+.txtlgnlft {
+  text-align: left;
+}
+.clearfix:after {
+  display: block;
+  content: '';
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+
+.search-box {
+  padding-left: 30px;
+  text-align: left;
+}

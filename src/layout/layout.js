@@ -3,6 +3,7 @@ import './layout.css'
 import { Link, Route, Router } from 'react-router-dom'
 import history from '../history'
 import LogOutBtn from '../auth/logoutbtn'
+import Links from './navigator'
 import {RouterContext} from '../auth/router-context';
 import {mapExcludeLoginRoutes, loginRouter} from '../routes/router'
 let StateContext = React.createContext('none');
@@ -20,6 +21,7 @@ class Layout extends Component {
     this.loginIn = this.loginIn.bind(this);
     this.logout = this.logout.bind(this);
     this.restDrop = this.restDrop.bind(this);
+    this.activeChange = this.activeChange.bind(this);
   }
   activeChange(i) {
     this.setState({
@@ -73,35 +75,7 @@ class Layout extends Component {
   }
 
   render() {
-    let arr = [
-      {
-        to: '/',
-        active: '',
-        title: '首页'
-      },
-      {
-        to: '/home',
-        active: '',
-        title: 'HOME'
-      },
-      {
-        to: '/slash',
-        active: '',
-        title: 'SLASH'
-      }
-    ];
-    arr.forEach((item, i) => {
-      if (this.state.activeIndex === i) {
-        arr[i].active = 'active'
-      }
-    });
-    let lis = arr.map((item, index) => (
-      <li className={item.active}
-          key={item.to}
-          onClick={this.activeChange.bind(this, index)}>
-        <Link to={item.to}>{item.title}</Link>
-      </li>
-    ));
+
     if (this.state.isLogin) {
       return (
         <div>
@@ -110,9 +84,11 @@ class Layout extends Component {
               <div>
                 <ul className="row tab-header">
                   <li className="col-md-4">
-                    <h2 className="sys-title">
-                      CRM管理系统
-                    </h2>
+                    <Link to="/">
+                      <h2 className="sys-title">
+                        CRM管理系统
+                      </h2>
+                    </Link>
                   </li>
                   <li className="col-md-1 col-md-offset-6 user-name">
                     <span>马宾</span>
@@ -131,13 +107,14 @@ class Layout extends Component {
                                    logout={this.logout}
                                    restDrop={this.restDrop} />
                       </li>
-                      <li><a>修改密码</a></li>
+                      <li><Link to={'/changeInfo'}>修改密码</Link></li>
                     </ul>
                   </li>
                 </ul>
                 <ul className="nav nav-pills nav-stacked col-md-1 left-nav"
                     style={{height: this.state.h}}>
-                  {lis}
+                  <Links activeIndex={this.state.activeIndex}
+                         activeChange={this.activeChange} />
                 </ul>
                 <div className="col-md-11" id="right" style={{height: this.state.h}}>
                   {mapExcludeLoginRoutes}

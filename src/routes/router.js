@@ -6,6 +6,9 @@ import SlashPage from '../slash'
 import Registry from '../auth/register'
 import ChangeInfo from '../auth/change-ifno'
 import MyClues from '../clue/myClues'
+import ClueDetail from '../clue/detail'
+import ClueEdit from '../clue/edit'
+import CreateClue from '../clue/create'
 // 鉴权路由
 let authorizedRoutes = [
   {
@@ -27,6 +30,18 @@ let authorizedRoutes = [
   {
     path: '/myclue',
     component: MyClues
+  },
+  {
+    path: '/myclue/detail/:id',
+    component: ClueDetail
+  },
+  {
+    path: '/myclue/edit/:id',
+    component: ClueEdit
+  },
+  {
+    path: '/createNewClue',
+    component: CreateClue
   }
 ]
 // 非鉴权路由

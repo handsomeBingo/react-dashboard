@@ -93,9 +93,8 @@ class Layout extends Component {
                   <li className="col-md-1 col-md-offset-6 user-name">
                     <span>马宾</span>
                   </li>
-                  <li className="col-md-1">
+                  <li className="col-md-1" onMouseEnter={this.dropMenu} onMouseLeave={this.dropMenu}>
                     <button type="button"
-                            onClick={this.dropMenu}
                             className="btn btn-default dropdown-toggle title-ops"
                             data-toggle="dropdown">默认 <span className="caret"></span>
                     </button>
@@ -111,12 +110,13 @@ class Layout extends Component {
                     </ul>
                   </li>
                 </ul>
-                <ul className="nav nav-pills nav-stacked col-md-1 left-nav"
-                    style={{height: this.state.h}}>
+                <ul className="nav nav-pills nav-stacked col-md-2 left-nav"
+                    style={{height: this.state.h, maxWidth: '200px'}}>
                   <Links activeIndex={this.state.activeIndex}
                          activeChange={this.activeChange} />
                 </ul>
-                <div className="col-md-11" id="right" style={{height: this.state.h}}>
+                <div className="col-md-10" id="right"
+                     style={{height: this.state.h, paddingLeft: '100px'}}>
                   {mapExcludeLoginRoutes}
                 </div>
               </div>

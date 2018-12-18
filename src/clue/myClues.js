@@ -97,6 +97,13 @@ class MyClues extends Component {
   handleSearch() {
     console.log(this.state)
   }
+  goEdit(item) {
+    this.context.router.history.push(`/myclue/edit/${item.id}`)
+  }
+
+  goDetail(item) {
+    this.context.router.history.push(`/myclue/detail/${item.id}`)
+  }
 
   render() {
     return (
@@ -212,8 +219,10 @@ class MyClues extends Component {
                       </td>
                       <td>
                         <button type="button"
+                                onClick={() => {this.goEdit(item)}}
                                 className="btn btn-primary">编辑</button>
                         <button type="button"
+                                onClick={() => {this.goDetail(item)}}
                                 className="btn btn-primary mgnlft20">详情</button>
                         <button type="button" className="btn btn-primary mgnlft20">放弃</button>
                       </td>
@@ -241,6 +250,36 @@ class MyClues extends Component {
             </div>
             <div className="fl mgtp20 mgnlft20">
               <button type="button" className="btn-primary btn">GO</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal"
+             id="myModal" tabIndex="-1"
+             role="dialog"
+             style={{display: 'block'}}
+             aria-labelledby="myModalLabel">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 className="modal-title" id="myModalLabel">
+                  模态框（Modal）标题
+                </h4>
+              </div>
+              <div className="modal-body">
+                按下 ESC 按钮退出。
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" className="btn btn-primary">
+                  提交更改
+                </button>
+              </div>
             </div>
           </div>
         </div>

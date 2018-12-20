@@ -1,0 +1,9 @@
+.modal {
+  background: rgba(0, 0, 0, .5);
+}
+.modal-title {
+  text-align: left;
+}
+.modal-content {
+  top: 100px;
+}

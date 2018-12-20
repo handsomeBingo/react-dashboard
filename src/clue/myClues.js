@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './my-clues.css'
+import {contextBinding} from '../libs/utils'
+import Dialog from '../components/dialog'
+import Pagination from '../components/pager'
 
 const CLUES_STATUS_LIST = [
   {
@@ -27,8 +30,8 @@ const CLUES_ORIGIN_LIST = [
 class MyClues extends Component {
   constructor(props) {
     super(props);
-    this.createNewClue = this.createNewClue.bind(this);
     this.state = {
+      dialogFlag: false,
       keywords: '',
       clueStatus: '1',
       cluesOrigin: '1',
@@ -60,17 +63,38 @@ class MyClues extends Component {
           origin: '新建',
           buyDesire: 1
         }
-      ]
+      ],
+      currentPage: 1,
+      total: 100
     };
-    this.keywordsChange = this.keywordsChange.bind(this);
-    this.clueStatusChange = this.clueStatusChange.bind(this);
-    this.clueOriginChange = this.clueOriginChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    contextBinding([
+      'createNewClue',
+      'keywordsChange',
+      'clueStatusChange',
+      'clueOriginChange',
+      'handleSearch',
+      'handleCloseDialog',
+      'handleConfirm',
+      'giveUp',
+      'handleSizeChange',
+      'handlePageChange'
+    ], this);
   }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+
+  handleCloseDialog() {
+    this.setState({
+      dialogFlag: false
+    })
+  }
+  handleConfirm() {
+    // do sth when confirm btn was clicked
+    this.handleCloseDialog()
+    // request the backend interface, pass data to them and then shutdown the dialog when they response.
+  }
 
   createNewClue() {
     this.context.router.history.push('/createNewClue')
@@ -97,6 +121,7 @@ class MyClues extends Component {
   handleSearch() {
     console.log(this.state)
   }
+
   goEdit(item) {
     this.context.router.history.push(`/myclue/edit/${item.id}`)
   }
@@ -104,7 +129,17 @@ class MyClues extends Component {
   goDetail(item) {
     this.context.router.history.push(`/myclue/detail/${item.id}`)
   }
-
+  giveUp(item) {
+    this.setState({
+      dialogFlag: true
+    })
+  }
+  handlePageChange(page) {
+    // the page changed,request the api
+  }
+  handleSizeChange(size) {
+    // the page size changed the api
+  }
   render() {
     return (
       <div>
@@ -219,70 +254,41 @@ class MyClues extends Component {
                       </td>
                       <td>
                         <button type="button"
-                                onClick={() => {this.goEdit(item)}}
-                                className="btn btn-primary">编辑</button>
+                                onClick={() => {
+                                  this.goEdit(item)
+                                }}
+                                className="btn btn-primary">编辑
+                        </button>
                         <button type="button"
-                                onClick={() => {this.goDetail(item)}}
-                                className="btn btn-primary mgnlft20">详情</button>
-                        <button type="button" className="btn btn-primary mgnlft20">放弃</button>
+                                onClick={() => {
+                                  this.goDetail(item)
+                                }}
+                                className="btn btn-primary mgnlft20">详情
+                        </button>
+                        <button type="button" 
+                                onClick={this.giveUp}
+                                className="btn btn-primary mgnlft20">放弃</button>
                       </td>
                     </tr>
                   )
-
                 })
               }
               </tbody>
             </table>
           </div>
-          <div className="col-md-8 clearfix">
-            <p className="fl pager-diy">第 <span>2</span> 页，共100页</p>
-            <ul className="pagination fl">
-              <li><a href="#">&laquo;</a></li>
-              <li className="active"><a href="#">1</a></li>
-              <li className="disabled"><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&raquo;</a></li>
-            </ul>
-            <div className="fl mgtp20 mgnlft20 pager-input">
-              <input type="text" className="form-control"/>
-            </div>
-            <div className="fl mgtp20 mgnlft20">
-              <button type="button" className="btn-primary btn">GO</button>
-            </div>
-          </div>
+          <Pagination currentPage={this.state.currentPage}
+                      totalPage={this.state.total}
+                      pageChange={this.handlePageChange}
+                      sizeChange={this.handleSizeChange}></Pagination>
         </div>
-
-        <div className="modal"
-             id="myModal" tabIndex="-1"
-             role="dialog"
-             style={{display: 'block'}}
-             aria-labelledby="myModalLabel">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal"
-                        aria-hidden="true">×
-                </button>
-                <h4 className="modal-title" id="myModalLabel">
-                  模态框（Modal）标题
-                </h4>
-              </div>
-              <div className="modal-body">
-                按下 ESC 按钮退出。
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-                <button type="button" className="btn btn-primary">
-                  提交更改
-                </button>
-              </div>
-            </div>
+        <Dialog visible={this.state.dialogFlag}
+                title="确认"
+                confirmMethod={this.handleConfirm}
+                closeMethod={this.handleCloseDialog}>
+          <div>
+            <h2>您确定要放弃这条线索吗？</h2>
           </div>
-        </div>
+        </Dialog>
       </div>
     )
   }

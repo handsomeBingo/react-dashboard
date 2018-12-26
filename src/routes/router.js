@@ -40,7 +40,7 @@ let authorizedRoutes = [
     component: ClueEdit
   },
   {
-    path: '/createNewClue',
+    path: '/myclue/create',
     component: CreateClue
   }
 ]

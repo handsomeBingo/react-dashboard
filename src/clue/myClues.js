@@ -65,7 +65,8 @@ class MyClues extends Component {
         }
       ],
       currentPage: 1,
-      total: 100
+      total: 98,
+      size: 10
     };
     contextBinding([
       'createNewClue',
@@ -97,7 +98,7 @@ class MyClues extends Component {
   }
 
   createNewClue() {
-    this.context.router.history.push('/createNewClue')
+    this.context.router.history.push('/myclue/create')
   }
 
   keywordsChange(e) {
@@ -136,9 +137,17 @@ class MyClues extends Component {
   }
   handlePageChange(page) {
     // the page changed,request the api
+    console.log(page)
+    this.setState({
+      currentPage: page
+    })
   }
-  handleSizeChange(size) {
+  handleSizeChange(e) {
     // the page size changed the api
+    console.log(e.target.value)
+    this.setState({
+      size: e.target.value
+    })
   }
   render() {
     return (
@@ -277,7 +286,9 @@ class MyClues extends Component {
             </table>
           </div>
           <Pagination currentPage={this.state.currentPage}
-                      totalPage={this.state.total}
+                      total={this.state.total}
+                      size={this.state.size}
+                      sizes={[10, 20, 50, 100]}
                       pageChange={this.handlePageChange}
                       sizeChange={this.handleSizeChange}></Pagination>
         </div>

@@ -24,20 +24,22 @@ class Links extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
-   return (
-     <React.Fragment>
-       {
-         arr.map((item, index) => (
-           <li className={index === this.props.activeIndex ? 'active' : ''}
-               key={item.to}
-               onClick={() => this.props.activeChange(index)}>
-             <Link to={item.to}>{item.title}</Link>
-           </li>
-         ))
-       }
-     </React.Fragment>
-   )
+    let {activeName} = this.props
+    return (
+      <React.Fragment>
+        {
+          arr.map((item, index) => (
+            <li className={item.to === activeName ? 'active' : ''}
+                key={item.to}
+                onClick={() => this.props.activeChange(item.to)}>
+              <Link to={item.to}>{item.title}</Link>
+            </li>
+          ))
+        }
+      </React.Fragment>
+    )
   }
 }
 

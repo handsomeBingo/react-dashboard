@@ -97,3 +97,12 @@ a:hover, a:focus, a:visited {
   padding-left: 30px;
   text-align: left;
 }
+
+.userName {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+}
+.dropdown-menu {
+  top: 80%;
+}

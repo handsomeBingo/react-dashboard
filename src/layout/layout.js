@@ -84,7 +84,8 @@ class Layout extends Component {
   }
 
   render() {
-    let activeName = this.context.router.route.pathname
+    let curPath = /(\/\w+)\/?\w?/.exec(this.context.router.route.location.pathname);
+    let activeName = curPath ?  curPath[1] : '/';
     if (this.state.isLogin) {
       return (
         <div>
@@ -99,13 +100,13 @@ class Layout extends Component {
                   </Link>
                 </li>
                 <li className="col-md-1 col-md-offset-6 user-name">
-                  <span>马宾</span>
+                  <span className="userName">马宾</span>
                 </li>
                 <li className="col-md-1" onMouseEnter={this.dropMenu}
                     onMouseLeave={this.dropMenu}>
                   <button type="button"
                           className="btn btn-default dropdown-toggle title-ops"
-                          data-toggle="dropdown">默认 <span className="caret"></span>
+                          data-toggle="dropdown">菜单<span className="caret"></span>
                   </button>
                   <ul className="dropdown-menu re-drop-width"
                       role="menu"

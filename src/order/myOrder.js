@@ -27,7 +27,7 @@ const CLUES_ORIGIN_LIST = [
   }
 ];
 
-class myfollows extends Component {
+class MyOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,7 +98,7 @@ class myfollows extends Component {
   }
 
   createNewClue() {
-    this.context.router.history.push('/myfollow/create')
+    this.context.router.history.push('/myorder/create')
   }
 
   keywordsChange(e) {
@@ -124,11 +124,11 @@ class myfollows extends Component {
   }
 
   goEdit(item) {
-    this.context.router.history.push(`/myfollow/edit/${item.id}`)
+    this.context.router.history.push(`/myorder/edit/${item.id}`)
   }
 
   goDetail(item) {
-    this.context.router.history.push(`/myfollow/detail/${item.id}`)
+    this.context.router.history.push(`/myorder/detail/${item.id}`)
   }
   giveUp(item) {
     this.setState({
@@ -154,13 +154,13 @@ class myfollows extends Component {
       <div>
         <div className="row">
           <h2 className="col-md-2 txtlgnlft">
-            线索列表
+            订单列表
           </h2>
           <p className="col-md-1 col-md-offset-6 mgtp20">
             <button type="button"
                     className="btn btn-primary"
                     onClick={this.createNewClue}>
-              新建线索
+              新建订单
             </button>
           </p>
         </div>
@@ -276,7 +276,7 @@ class myfollows extends Component {
                         </button>
                         <button type="button" 
                                 onClick={this.giveUp}
-                                className="btn btn-primary mgnlft20">放弃</button>
+                                className="btn btn-primary mgnlft20">取消</button>
                       </td>
                     </tr>
                   )
@@ -297,7 +297,7 @@ class myfollows extends Component {
                 confirmMethod={this.handleConfirm}
                 closeMethod={this.handleCloseDialog}>
           <div>
-            <h2>您确定要放弃这条线索吗？</h2>
+            <h2>您确定要取消该订单吗？</h2>
           </div>
         </Dialog>
       </div>
@@ -305,4 +305,4 @@ class myfollows extends Component {
   }
 }
 
-export default myfollows;
+export default MyOrder;

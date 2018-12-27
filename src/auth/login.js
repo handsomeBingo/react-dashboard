@@ -24,7 +24,7 @@ class Login extends Component {
   login () {
     localStorage.setItem('isLogin', true)
     // this.props.loginIn(true)
-    this.context.router.history.push("/home");
+    this.context.router.history.push("/");
     //
     // httpPost('/user/auth/login', this.state).then((r) => {
     //   console.log(r)

@@ -3,20 +3,16 @@ import {Link} from "react-router-dom";
 
 let arr = [
   {
-    to: '/',
-    title: '首页'
-  },
-  {
     to: '/myclue',
     title: '线索列表'
   },
   {
-    to: '/myfllowing',
-    title: '我的跟进'
+    to: '/myfollow',
+    title: '跟进列表'
   },
   {
     to: '/myorder',
-    title: '我的订单'
+    title: '我的业绩'
   }
 ];
 

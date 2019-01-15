@@ -98,7 +98,7 @@ class myfollows extends Component {
   }
 
   createNewClue() {
-    this.context.router.history.push('/myfollow/create')
+    this.context.router.history.push('/myclue/create')
   }
 
   keywordsChange(e) {
@@ -274,7 +274,7 @@ class myfollows extends Component {
                                 }}
                                 className="btn btn-primary mgnlft20">详情
                         </button>
-                        <button type="button" 
+                        <button type="button"
                                 onClick={this.giveUp}
                                 className="btn btn-primary mgnlft20">放弃</button>
                       </td>

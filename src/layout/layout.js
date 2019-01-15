@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import './layout.css'
-import {Link, Route, Router} from 'react-router-dom'
+import {Link, Route, Router, Redirect} from 'react-router-dom'
 import LogOutBtn from '../auth/logoutbtn'
 import Links from './navigator'
 import {RouterContext} from '../auth/router-context';
+import {LoginContext} from '../ctx'
 import {mapExcludeLoginRoutes, loginRouter} from '../routes/router'
 import PropTypes from "prop-types";
 
@@ -15,7 +16,7 @@ class Layout extends Component {
       h: 'auto',
       w: 'auto',
       dropdown: 'none',
-      isLogin: true
+      isLogin: false
     };
     this.dropMenu = this.dropMenu.bind(this);
     this.loginIn = this.loginIn.bind(this);
@@ -78,6 +79,7 @@ class Layout extends Component {
   }
 
   logout(state) {
+    localStorage.clear()
     this.setState({
       isLogin: state
     })
@@ -135,13 +137,18 @@ class Layout extends Component {
         </div>
       )
     } else {
-      return (
-        <div>
-          <RouterContext.Provider value={this.loginIn}>
-            {loginRouter}
-          </RouterContext.Provider>
-        </div>
-      )
+      let unAuth = !(['/login', '/registry'].includes(activeName))
+      if (unAuth) {
+        return <Redirect to="/login" />
+      } else {
+        return (
+          <div>
+            <RouterContext.Provider value={this.loginIn}>
+              {loginRouter}
+            </RouterContext.Provider>
+          </div>
+        )
+      }
     }
   }
 }

@@ -19,9 +19,9 @@ class LogOutBtn extends Component {
     })
   }
   quit() {
-    this.context.router.history.push("/login");
+    this.props.logout(false);
     this.props.restDrop();
-    this.props.logout(false)
+    this.context.router.history.push("/login");
   }
 
   render () {

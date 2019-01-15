@@ -18,7 +18,7 @@ export default (token = ACCESS_TOKEN) => {
     },
     httpPost(url, params) {
       let assignedParams = Object.assign({token}, params)
-      return axios.post(url, {params: params}).then(res => res)
+      return axios.post(url, params).then(res => res)
     }
   }
 }

@@ -10,7 +10,7 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      user_name: '',
+      phone: '',
       password: ''
     };
     this.login = this.login.bind(this);
@@ -18,44 +18,51 @@ class Login extends Component {
     this.pwdChange = this.pwdChange.bind(this);
     this.register = this.register.bind(this);
   }
+
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
-  login () {
-    localStorage.setItem('isLogin', true)
-    // this.props.loginIn(true)
-    this.context.router.history.push("/");
-    //
-    // httpPost('/user/auth/login', this.state).then((r) => {
-    //   console.log(r)
-    // }).catch((e) => {
-    //   console.log(e)
-    // })
+
+  login(cb) {
+    return httpPost('/auth/login', this.state).then((r) => {
+      if (r.data.status === 0) {
+        localStorage.setItem('isLogin', true);
+        cb(true);
+        this.context.router.history.push("/");
+      } else {
+        localStorage.clear()
+      }
+    }).catch((e) => {
+      console.log(e)
+    })
   }
+
   uNameChange(e) {
     this.setState(
       {
-        user_name: e.target.value
+        phone: e.target.value
       }
     )
   }
+
   register() {
     this.context.router.history.push('/registry')
   }
+
   pwdChange(e) {
     this.setState({
       password: e.target.value
     })
   }
 
-  render () {
+  render() {
     return (
       <div className="full-screen">
         <div className="container login-form-wrapper" style={{width: '400px'}}>
           <form className="form-horizontal row" role="form">
             <div className="form-group">
               <label htmlFor="userName" className="control-label col-md-4">
-                用户名
+                电&nbsp;&nbsp;&nbsp;&nbsp;话
               </label>
               <div className="col-md-8">
                 <input type="text"
@@ -74,7 +81,7 @@ class Login extends Component {
                        placeholder="请输入密码"
                        value={this.state.password}
                        onChange={this.pwdChange}
-                       type="password" />
+                       type="password"/>
               </div>
             </div>
             <div className="form-group">
@@ -83,7 +90,9 @@ class Login extends Component {
                   {
                     (value) => {
                       return <button className="btn btn-primary col-md-offset-2 col-md-4"
-                                     onClick={() => {value(true);this.login()}}
+                                     onClick={() => {
+                                       this.login(value)
+                                     }}
                                      type="button">
                         登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
                       </button>

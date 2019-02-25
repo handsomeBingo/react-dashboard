@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 let uInfoString = localStorage.getItem('userInfo');
+console.log(uInfoString)
 let ACCESS_TOKEN = uInfoString
-  ? JSON.parse(uInfoString)
+  ? JSON.parse(uInfoString).token
   : '';
 
 export default (token = ACCESS_TOKEN) => {

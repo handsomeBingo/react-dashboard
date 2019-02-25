@@ -47,7 +47,11 @@ class Registry extends Component {
     this.cancel = this.cancel.bind(this);
   }
   register() {
-    console.log(this.state)
+    httpPost('/auth/register', this.state).then((r) => {
+      if (r.data.code === 0) {
+        this.context.router.history.push("/auth");
+      }
+    })
   }
   cancel() {
     this.context.router.history.push("/login");

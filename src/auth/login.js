@@ -25,8 +25,9 @@ class Login extends Component {
 
   login(cb) {
     return httpPost('/auth/login', this.state).then((r) => {
-      if (r.data.status === 0) {
+      if (r.data.code === 0) {
         localStorage.setItem('isLogin', true);
+        localStorage.setItem('userInfo', JSON.stringify(r.data.data));
         cb(true);
         this.context.router.history.push("/");
       } else {

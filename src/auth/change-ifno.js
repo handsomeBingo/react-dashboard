@@ -3,6 +3,7 @@ import {RouterContext} from "./router-context";
 import './registry.css'
 import PropTypes from 'prop-types';
 import http from "../libs/http";
+
 let {httpPost} = http()
 
 const DEPARTMENT_LIST = [
@@ -23,10 +24,12 @@ const DEPARTMENT_LIST = [
     value: '销售-华南一区'
   }
 ]
+
 class ChangeInfo extends Component {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -43,45 +46,71 @@ class ChangeInfo extends Component {
     this.rpwdChange = this.rpwdChange.bind(this);
     this.phoneChange = this.phoneChange.bind(this);
     this.dptChange = this.dptChange.bind(this);
-    this.register = this.register.bind(this);
+    this.modify = this.modify.bind(this);
     this.cancel = this.cancel.bind(this);
   }
-  register() {
-    console.log(this.state)
+
+  componentDidMount() {
+    let {id} = JSON.parse(localStorage.getItem('userInfo'))
+    httpPost('/auth/getUserInfo', {
+      id
+    }).then(r => {
+      this.setState({
+        ...r.data.data
+      })
+    })
   }
+
+  modify() {
+    httpPost('/auth/changeInfo', this.state).then((r) => {
+      if (r.data.code === 0) {
+        this.context.router.history.push("/");
+      } else {
+        alert(r.data.data.msg)
+      }
+    })
+  }
+
   cancel() {
     this.context.router.history.push("/");
   }
+
   uNameChange(e) {
     this.setState({
       userName: e.target.value
     })
   }
+
   phoneChange(e) {
     this.setState({
       phone: e.target.value
     })
   }
+
   nNameChange(e) {
     this.setState({
       nickname: e.target.value
     })
   }
+
   pwdChange(e) {
     this.setState({
       password: e.target.value
     })
   }
+
   rpwdChange(e) {
     this.setState({
       repassword: e.target.value
     })
   }
+
   dptChange(e) {
     this.setState({
       department: e.target.value
     })
   }
+
   render() {
     return (
       <div className="container">
@@ -98,7 +127,7 @@ class ChangeInfo extends Component {
               <div className="col-md-8">
                 <input type="text"
                        className="form-control"
-                       vlaue={this.state.userName}
+                       value={this.state.userName}
                        onChange={this.uNameChange}
                        placeholder="请输入用户名"/>
               </div>
@@ -110,7 +139,7 @@ class ChangeInfo extends Component {
               <div className="col-md-8">
                 <input type="text"
                        className="form-control"
-                       vlaue={this.state.nickname}
+                       value={this.state.nickname}
                        onChange={this.nNameChange}
                        placeholder="请输入昵称"/>
               </div>
@@ -122,7 +151,7 @@ class ChangeInfo extends Component {
               <div className="col-md-8">
                 <input type="text"
                        className="form-control"
-                       vlaue={this.state.phone}
+                       value={this.state.phone}
                        onChange={this.phoneChange}
                        placeholder="请输入电话"/>
               </div>
@@ -136,7 +165,7 @@ class ChangeInfo extends Component {
                        placeholder="请输入密码"
                        value={this.state.password}
                        onChange={this.pwdChange}
-                       type="password" />
+                       type="password"/>
               </div>
             </div>
             <div className="form-group">
@@ -148,7 +177,7 @@ class ChangeInfo extends Component {
                        placeholder="请再次输入密码"
                        value={this.state.repassword}
                        onChange={this.rpwdChange}
-                       type="password" />
+                       type="password"/>
               </div>
             </div>
             <div className="form-group">
@@ -157,9 +186,9 @@ class ChangeInfo extends Component {
               </label>
               <div className="col-md-8">
                 <select className="form-control"
-                       placeholder="请选择部门"
-                       value={this.state.department}
-                       onChange={this.dptChange}>
+                        placeholder="请选择部门"
+                        value={this.state.department}
+                        onChange={this.dptChange}>
                   {
                     DEPARTMENT_LIST.map((item) => (
                       <option value={item.key} key={item.key}>{item.value}</option>
@@ -172,10 +201,12 @@ class ChangeInfo extends Component {
               <div className="row">
                 <button className="btn btn-primary col-md-offset-5 col-md-2"
                         onClick={this.cancel}
-                        type="button">取消</button>
+                        type="button">取消
+                </button>
                 <button className="btn btn-primary col-md-offset-2 col-md-2"
-                        onClick={this.register}
-                        type="button">注册</button>
+                        onClick={this.modify}
+                        type="button">保存
+                </button>
               </div>
             </div>
           </form>

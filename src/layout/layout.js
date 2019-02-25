@@ -11,12 +11,13 @@ import PropTypes from "prop-types";
 class Layout extends Component {
   constructor(prop) {
     super(prop);
+    let isLogin = localStorage.getItem('isLogin');
     this.state = {
       activeIndex: 0,
       h: 'auto',
       w: 'auto',
       dropdown: 'none',
-      isLogin: false
+      isLogin: isLogin
     };
     this.dropMenu = this.dropMenu.bind(this);
     this.loginIn = this.loginIn.bind(this);
@@ -88,6 +89,9 @@ class Layout extends Component {
   render() {
     let curPath = /(\/\w+)\/?\w?/.exec(this.context.router.route.location.pathname);
     let activeName = curPath ?  curPath[1] : '/';
+    let userInfoInLs = localStorage.getItem('userInfo');
+    let userInfo = userInfoInLs ? JSON.parse(userInfoInLs) : {}
+    let {userName} = userInfo
     if (this.state.isLogin) {
       return (
         <div>
@@ -102,7 +106,7 @@ class Layout extends Component {
                   </Link>
                 </li>
                 <li className="col-md-1 col-md-offset-6 user-name">
-                  <span className="userName">马宾</span>
+                  <span className="userName">{userName}</span>
                 </li>
                 <li className="col-md-1" onMouseEnter={this.dropMenu}
                     onMouseLeave={this.dropMenu}>
@@ -118,7 +122,7 @@ class Layout extends Component {
                                  logout={this.logout}
                                  restDrop={this.restDrop}/>
                     </li>
-                    <li><Link to={'/changeInfo'}>修改密码</Link></li>
+                    <li><Link to={'/changeInfo'}>修改信息</Link></li>
                   </ul>
                 </li>
               </ul>
